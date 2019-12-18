@@ -67,7 +67,7 @@ describe('app routes', () => {
     return request(app)
       .get('/api/v1/books')
       .then(res => {
-        expect(res.body).toEqual({
+        expect(res.body).toEqual([{
           _id: expect.any(String),
           __v: 0,
           title: 'New Book',
@@ -78,7 +78,7 @@ describe('app routes', () => {
           pages: 302,
           publicationYear: date.toISOString(),
           dateRead: date.toISOString()
-        });
+        }]);
       });
   });
 });
