@@ -104,7 +104,7 @@ describe('app routes', () => {
 
   it('can get a single book', async() => {
     return request(app)
-      .get(`api/v1/books/${book._id}`)
+      .get(`/api/v1/books/${book._id}`)
       .then(res => {
         expect(res.body).toEqual({
           _id: expect.any(String),
@@ -123,7 +123,7 @@ describe('app routes', () => {
 
   it('can delete a book', async() => {
     return request(app)
-      .del(`api/v1/books/${book._id}`)
+      .del(`/api/v1/books/${book._id}`)
       .then(res => {
         expect(res.body).toEqual({
           _id: expect.any(String),
