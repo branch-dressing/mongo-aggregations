@@ -104,7 +104,26 @@ describe('app routes', () => {
 
   it('can get a single book', async() => {
     return request(app)
-      .get(`apu/v1/books/${book._id}`)
+      .get(`api/v1/books/${book._id}`)
+      .then(res => {
+        expect(res.body).toEqual({
+          _id: expect.any(String),
+          __v: 0,
+          title: 'New Book',
+          author: 'Durham, Joel',
+          myRating: 5,
+          avgRating: 4.2,
+          binding: 'Hardback',
+          pages: 302,
+          publicationYear: date.toISOString(),
+          dateRead: date.toISOString()
+        });
+      });
+  });
+
+  it('can delete a book', async() => {
+    return request(app)
+      .del(`api/v1/books/${book._id}`)
       .then(res => {
         expect(res.body).toEqual({
           _id: expect.any(String),
