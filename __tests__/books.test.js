@@ -81,4 +81,24 @@ describe('app routes', () => {
         }]);
       });
   });
+
+  it('can update a book', async() => {
+    return request(app)
+      .patch(`/api/v1/books/${book._id}`)
+      .send({ title: 'Untitled Memoir', pages: 556 })
+      .then(res => {
+        expect(res.body).toEqual({
+          _id: expect.any(String),
+          __v: 0,
+          title: 'Untitled Memoir',
+          author: 'Durham, Joel',
+          myRating: 5,
+          avgRating: 4.2,
+          binding: 'Hardback',
+          pages: 556,
+          publicationYear: date.toISOString(),
+          dateRead: date.toISOString()
+        });
+      });
+  });
 });
