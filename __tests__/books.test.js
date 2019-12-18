@@ -15,16 +15,26 @@ describe('app routes', () => {
     return mongoose.connection.dropDatabase();
   });
 
-  // beforeEach(async() => {
-  //   book = await Book.create
-  // });
+  let book;
+  const date = new Date();
+  beforeEach(async() => {
+    book = await Book.create({
+      title: 'New Book',
+      author: 'Durham, Joel',
+      myRating: 5,
+      avgRating: 4.2,
+      binding: 'Hardback',
+      pages: 302,
+      publicationYear: date,
+      dateRead: date
+    });
+  });
 
   afterAll(() => {
     return mongoose.connection.close();
   });
 
   it('can create a new book', () => {
-    const date = new Date();
     return request(app)
       .post('/api/v1/books')
       .send({
@@ -37,6 +47,25 @@ describe('app routes', () => {
         publicationYear: date,
         dateRead: date
       })
+      .then(res => {
+        expect(res.body).toEqual({
+          _id: expect.any(String),
+          __v: 0,
+          title: 'New Book',
+          author: 'Durham, Joel',
+          myRating: 5,
+          avgRating: 4.2,
+          binding: 'Hardback',
+          pages: 302,
+          publicationYear: date.toISOString(),
+          dateRead: date.toISOString()
+        });
+      });
+  });
+
+  it('gets all books', async() => {
+    return request(app)
+      .get('/api/v1/books')
       .then(res => {
         expect(res.body).toEqual({
           _id: expect.any(String),
